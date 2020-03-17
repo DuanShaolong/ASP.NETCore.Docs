@@ -2,9 +2,9 @@
 title: "Tutorial: Update related data - ASP.NET MVC with EF Core"
 description: "In this tutorial you'll update related data by updating foreign key fields and navigation properties."
 author: rick-anderson
-ms.author: tdykstra
+ms.author: riande
 ms.custom: mvc
-ms.date: 02/05/2019
+ms.date: 03/27/2019
 ms.topic: tutorial
 uid: data/ef-mvc/update-related-data
 ---
@@ -30,7 +30,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* [Read related data with EF Core for an ASP.NET Core MVC web app](read-related-data.md)
+* [Read related data](read-related-data.md)
 
 ## Customize Courses pages
 
@@ -118,7 +118,7 @@ When you edit an instructor record, you want to be able to update the instructor
 
 In *InstructorsController.cs*, change the code in the HttpGet `Edit` method so that it loads the Instructor entity's `OfficeAssignment` navigation property and calls `AsNoTracking`:
 
-[!code-csharp[](intro/samples/cu/Controllers/InstructorsController.cs?highlight=9,10&name=snippet_EditGetOA)]
+[!code-csharp[](intro/samples/cu/Controllers/InstructorsController.cs?highlight=8-11&name=snippet_EditGetOA)]
 
 Replace the HttpPost `Edit` method with the following code to handle office assignment updates:
 
@@ -126,11 +126,11 @@ Replace the HttpPost `Edit` method with the following code to handle office assi
 
 The code does the following:
 
--  Changes the method name to `EditPost` because the signature is now the same as the HttpGet `Edit` method (the `ActionName` attribute specifies that the `/Edit/` URL is still used).
+* Changes the method name to `EditPost` because the signature is now the same as the HttpGet `Edit` method (the `ActionName` attribute specifies that the `/Edit/` URL is still used).
 
--  Gets the current Instructor entity from the database using eager loading for the `OfficeAssignment` navigation property. This is the same as what you did in the HttpGet `Edit` method.
+* Gets the current Instructor entity from the database using eager loading for the `OfficeAssignment` navigation property. This is the same as what you did in the HttpGet `Edit` method.
 
--  Updates the retrieved Instructor entity with values from the model binder. The `TryUpdateModel` overload enables you to whitelist the properties you want to include. This prevents over-posting, as explained in the [second tutorial](crud.md).
+* Updates the retrieved Instructor entity with values from the model binder. The `TryUpdateModel` overload enables you to whitelist the properties you want to include. This prevents over-posting, as explained in the [second tutorial](crud.md).
 
     <!-- Snippets don't play well with <ul> [!code-csharp[](intro/samples/cu/Controllers/InstructorsController.cs?range=241-244)] -->
 
@@ -139,9 +139,9 @@ The code does the following:
         instructorToUpdate,
         "",
         i => i.FirstMidName, i => i.LastName, i => i.HireDate, i => i.OfficeAssignment))
-	```
+    ```
 
--   If the office location is blank, sets the Instructor.OfficeAssignment property to null so that the related row in the OfficeAssignment table will be deleted.
+* If the office location is blank, sets the Instructor.OfficeAssignment property to null so that the related row in the OfficeAssignment table will be deleted.
 
     <!-- Snippets don't play well with <ul>  "intro/samples/cu/Controllers/InstructorsController.cs"} -->
 
@@ -152,7 +152,7 @@ The code does the following:
     }
     ```
 
-- Saves the changes to the database.
+* Saves the changes to the database.
 
 ### Update the Instructor Edit view
 
@@ -220,7 +220,7 @@ In *Views/Instructors/Edit.cshtml*, add a **Courses** field with an array of che
 
 <a id="notepad"></a>
 > [!NOTE]
-> When you paste the code in Visual Studio, line breaks will be changed in a way that breaks the code.  Press Ctrl+Z one time to undo the automatic formatting.  This will fix the line breaks so that they look like what you see here. The indentation doesn't have to be perfect, but the `@</tr><tr>`, `@:<td>`, `@:</td>`, and `@:</tr>` lines must each be on a single line as shown or you'll get a runtime error. With the block of new code selected, press Tab three times to line up the new code with the existing code. You can check the status of this problem [here](https://developercommunity.visualstudio.com/content/problem/147795/razor-editor-malforms-pasted-markup-and-creates-in.html).
+> When you paste the code in Visual Studio, line breaks might be changed in a way that breaks the code. If the code looks different after pasting, press Ctrl+Z one time to undo the automatic formatting. This will fix the line breaks so that they look like what you see here. The indentation doesn't have to be perfect, but the `@</tr><tr>`, `@:<td>`, `@:</td>`, and `@:</tr>` lines must each be on a single line as shown or you'll get a runtime error. With the block of new code selected, press Tab three times to line up the new code with the existing code. This problem is fixed in Visual Studio 2019.
 
 [!code-html[](intro/samples/cu/Views/Instructors/Edit.cshtml?range=35-61)]
 
@@ -245,7 +245,7 @@ In *InstructorsController.cs*, delete the `DeleteConfirmed` method and insert th
 
 This code makes the following changes:
 
-* Does eager loading for the `CourseAssignments` navigation property.  You have to include this or EF won't know about related `CourseAssignment` entities and won't delete them.  To avoid needing to read them here you could configure cascade delete in the database.
+* Does eager loading for the `CourseAssignments` navigation property. You have to include this or EF won't know about related `CourseAssignment` entities and won't delete them. To avoid needing to read them here you could configure cascade delete in the database.
 
 * If the instructor to be deleted is assigned as administrator of any departments, removes the instructor assignment from those departments.
 
@@ -296,7 +296,7 @@ As explained in the [CRUD tutorial](crud.md), the Entity Framework implicitly im
 
 ## Get the code
 
-[Download or view the completed application.](https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
 
 ## Next steps
 
@@ -309,6 +309,7 @@ In this tutorial, you:
 > * Updated Delete page
 > * Added office location and courses to Create page
 
-Advance to the next article to learn how to handle concurrency conflicts.
+Advance to the next tutorial to learn how to handle concurrency conflicts.
+
 > [!div class="nextstepaction"]
 > [Handle concurrency conflicts](concurrency.md)

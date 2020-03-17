@@ -2,9 +2,9 @@
 title: "Tutorial: Implement inheritance - ASP.NET MVC with EF Core"
 description: "This tutorial will show you how to implement inheritance in the data model, using Entity Framework Core in an ASP.NET Core application."
 author: rick-anderson
-ms.author: tdykstra
+ms.author: riande
 ms.custom: mvc
-ms.date: 02/05/2019
+ms.date: 03/27/2019
 ms.topic: tutorial
 uid: data/ef-mvc/inheritance
 ---
@@ -27,7 +27,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* [Handle Concurrency with EF Core in an ASP.NET Core MVC web app](concurrency.md)
+* [Handle Concurrency](concurrency.md)
 
 ## Map inheritance to database
 
@@ -88,7 +88,7 @@ This is all that the Entity Framework needs in order to configure table-per-hier
 
 Save your changes and build the project. Then open the command window in the project folder and enter the following command:
 
-```console
+```dotnetcli
 dotnet ef migrations add Inheritance
 ```
 
@@ -122,7 +122,7 @@ This code takes care of the following database update tasks:
 
 Run the `database update` command:
 
-```console
+```dotnetcli
 dotnet ef database update
 ```
 
@@ -145,7 +145,7 @@ Right-click the Person table, and then click **Show Table Data** to see the disc
 
 ## Get the code
 
-[Download or view the completed application.](https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
 
 ## Additional resources
 
@@ -163,6 +163,7 @@ In this tutorial, you:
 > * Created and update migrations
 > * Tested the implementation
 
-Advance to the next article to learn how to handle a variety of relatively advanced Entity Framework scenarios.
+Advance to the next tutorial to learn how to handle a variety of relatively advanced Entity Framework scenarios.
+
 > [!div class="nextstepaction"]
-> [Advanced topics](advanced.md)
+> [Next: Advanced topics](advanced.md)

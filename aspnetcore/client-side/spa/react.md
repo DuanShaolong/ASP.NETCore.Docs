@@ -5,7 +5,7 @@ description: Learn how to get started with the ASP.NET Core Single Page Applicat
 monikerRange: '>= aspnetcore-2.1'
 ms.author: scaddie
 ms.custom: mvc
-ms.date: 02/13/2019
+ms.date: 03/07/2019
 uid: spa/react
 ---
 # Use the React project template with ASP.NET Core
@@ -14,13 +14,15 @@ The updated React project template provides a convenient starting point for ASP.
 
 The template is equivalent to creating both an ASP.NET Core project to act as an API backend, and a standard CRA React project to act as a UI, but with the convenience of hosting both in a single app project that can be built and published as a single unit.
 
+The React project template isn't meant for server-side rendering (SSR). For SSR with React and Node.js, consider [Next.js](https://github.com/zeit/next.js/) or [Razzle](https://github.com/jaredpalmer/razzle).
+
 ## Create a new app
 
 If you have ASP.NET Core 2.1 installed, there's no need to install the React project template.
 
 Create a new project from a command prompt using the command `dotnet new react` in an empty directory. For example, the following commands create the app in a *my-new-app* directory and switch to that directory:
 
-```console
+```dotnetcli
 dotnet new react -o my-new-app
 cd my-new-app
 ```
@@ -47,7 +49,7 @@ The project template creates an ASP.NET Core app and a React app. The ASP.NET Co
 
 ## Add pages, images, styles, modules, etc.
 
-The *ClientApp* directory is a standard CRA React app. See the official [CRA documentation](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) for more information.
+The *ClientApp* directory is a standard CRA React app. See the official [CRA documentation](https://create-react-app.dev/docs/getting-started/) for more information.
 
 There are slight differences between the React app created by this template and the one created by CRA itself; however, the app's capabilities are unchanged. The app created by the template contains a [Bootstrap](https://getbootstrap.com/)-based layout and a basic routing example.
 
@@ -79,7 +81,7 @@ There's a drawback to this default setup. Each time you modify your C# code and 
     ```
     BROWSER=none
     ```
-    
+
     This will prevent your web browser from opening when starting the CRA server externally.
 
 2. In a command prompt, switch to the *ClientApp* subdirectory, and launch the CRA development server:
@@ -96,3 +98,10 @@ There's a drawback to this default setup. Each time you modify your C# code and 
     ```
 
 When you start your ASP.NET Core app, it won't launch a CRA server. The instance you started manually is used instead. This enables it to start and restart faster. It's no longer waiting for your React app to rebuild each time.
+
+> [!IMPORTANT]
+> "Server-side rendering" is not a supported feature of this template. Our goal with this template is to meet parity with "create-react-app". As such, scenarios and features not included in a "create-react-app" project (such as SSR) are not supported and are left as an exercise for the user.
+
+## Additional resources
+
+* <xref:security/authentication/identity/spa>

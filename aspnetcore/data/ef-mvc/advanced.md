@@ -2,9 +2,9 @@
 title: "Tutorial: Learn about advanced scenarios - ASP.NET MVC with EF Core"
 description: "This tutorial introduces useful topics for going beyond the basics of developing ASP.NET Core web apps that use Entity Framework Core."
 author: rick-anderson
-ms.author: tdykstra
+ms.author: riande
 ms.custom: mvc
-ms.date: 02/05/2019
+ms.date: 03/27/2019
 ms.topic: tutorial
 uid: data/ef-mvc/advanced
 ---
@@ -28,7 +28,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* [Implement Inheritance with EF Core in an ASP.NET Core MVC web app](inheritance.md)
+* [Implement Inheritance](inheritance.md)
 
 ## Perform raw SQL queries
 
@@ -48,7 +48,7 @@ The `DbSet<TEntity>` class provides a method that you can use to execute a query
 
 In *DepartmentsController.cs*, in the `Details` method, replace the code that retrieves a department with a `FromSql` method call, as shown in the following highlighted code:
 
-[!code-csharp[](intro/samples/cu/Controllers/DepartmentsController.cs?name=snippet_RawSQL&highlight=8,9,10,13)]
+[!code-csharp[](intro/samples/cu/Controllers/DepartmentsController.cs?name=snippet_RawSQL&highlight=8,9,10)]
 
 To verify that the new code works correctly, select the **Departments** tab and then **Details** for one of the departments.
 
@@ -76,7 +76,7 @@ Suppose Contoso University administrators want to perform global changes in the 
 
 ![Update Course Credits page](advanced/_static/update-credits.png)
 
-In *CoursesContoller.cs*, add UpdateCourseCredits methods for HttpGet and HttpPost:
+In *CoursesController.cs*, add UpdateCourseCredits methods for HttpGet and HttpPost:
 
 [!code-csharp[](intro/samples/cu/Controllers/CoursesController.cs?name=snippet_UpdateGet)]
 
@@ -176,7 +176,7 @@ _context.ChangeTracker.AutoDetectChangesEnabled = false;
 
 ## EF Core source code and development plans
 
-The Entity Framework Core source is at [https://github.com/aspnet/EntityFrameworkCore](https://github.com/aspnet/EntityFrameworkCore). The EF Core repository contains nightly builds, issue tracking, feature specs, design meeting notes, and [the roadmap for future development](https://github.com/aspnet/EntityFrameworkCore/wiki/Roadmap). You can file or find bugs, and contribute.
+The Entity Framework Core source is at [https://github.com/dotnet/efcore](https://github.com/dotnet/efcore). The EF Core repository contains nightly builds, issue tracking, feature specs, design meeting notes, and [the roadmap for future development](https://github.com/dotnet/efcore/wiki/Roadmap). You can file or find bugs, and contribute.
 
 Although the source code is open, Entity Framework Core is fully supported as a Microsoft product. The Microsoft Entity Framework team keeps control over which contributions are accepted and tests all code changes to ensure the quality of each release.
 
@@ -197,6 +197,7 @@ The [third tutorial in this series](sort-filter-page.md) shows how to write LINQ
 Tom Dykstra and Rick Anderson (twitter @RickAndMSFT) wrote this tutorial. Rowan Miller, Diego Vega, and other members of the Entity Framework team assisted with code reviews and helped debug issues that arose while we were writing code for the tutorials. John Parente and Paul Goldman worked on updating the tutorial for ASP.NET Core 2.2.
 
 <a id="common-errors"></a>
+
 ## Troubleshoot common errors
 
 ### ContosoUniversity.dll used by another process
@@ -229,7 +230,7 @@ To delete a database in SSOX, right-click the database, click **Delete**, and th
 
 To delete a database by using the CLI, run the `database drop` CLI command:
 
-```console
+```dotnetcli
 dotnet ef database drop
 ```
 
@@ -245,7 +246,7 @@ Check the connection string. If you have manually deleted the database file, cha
 
 ## Get the code
 
-[Download or view the completed application.](https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
 
 ## Additional resources
 
@@ -270,6 +271,7 @@ In this tutorial, you:
 > * Learned about EF Core source code and development plans
 > * Learned how to use dynamic LINQ to simplify code
 
-This completes this series of tutorials on using the Entity Framework Core in an ASP.NET Core MVC application. If you want to learn about using EF 6 with ASP.NET Core, see the next article.
+This completes this series of tutorials on using the Entity Framework Core in an ASP.NET Core MVC application. This series worked with a new database; an alternative is to  reverse engineer a model from an existing database.
+
 > [!div class="nextstepaction"]
-> [EF 6 with ASP.NET Core](../entity-framework-6.md)
+> [Tutorial: EF Core with MVC, existing database](/ef/core/get-started/aspnetcore/existing-db?toc=/aspnet/core/toc.json&bc=/aspnet/core/breadcrumb/toc.json)

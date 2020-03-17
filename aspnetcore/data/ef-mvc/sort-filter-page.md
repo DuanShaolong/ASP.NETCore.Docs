@@ -2,8 +2,8 @@
 title: "Tutorial: Add sorting, filtering, and paging - ASP.NET MVC with EF Core"
 description: "In this tutorial you'll add sorting, filtering, and paging functionality to the Students Index page. You'll also create a page that does simple grouping."
 author: rick-anderson
-ms.author: tdykstra
-ms.date: 02/04/2019
+ms.author: riande
+ms.date: 03/27/2019
 ms.topic: tutorial
 uid: data/ef-mvc/sort-filter-page
 ---
@@ -28,7 +28,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* [Implement CRUD Functionality with EF Core in an ASP.NET Core MVC web app](crud.md)
+* [Implement CRUD Functionality](crud.md)
 
 ## Add column sort links
 
@@ -139,7 +139,7 @@ public async Task<IActionResult> Index(
     string sortOrder,
     string currentFilter,
     string searchString,
-    int? page)
+    int? pageNumber)
 ```
 
 The first time the page is displayed, or if the user hasn't clicked a paging or sorting link, all the parameters will be null.  If a paging link is clicked, the page variable will contain the page number to display.
@@ -153,7 +153,7 @@ If the search string is changed during paging, the page has to be reset to 1, be
 ```csharp
 if (searchString != null)
 {
-    page = 1;
+    pageNumber = 1;
 }
 else
 {
@@ -164,10 +164,10 @@ else
 At the end of the `Index` method, the `PaginatedList.CreateAsync` method converts the student query to a single page of students in a collection type that supports paging. That single page of students is then passed to the view.
 
 ```csharp
-return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), page ?? 1, pageSize));
+return View(await PaginatedList<Student>.CreateAsync(students.AsNoTracking(), pageNumber ?? 1, pageSize));
 ```
 
-The `PaginatedList.CreateAsync` method takes a page number. The two question marks represent the null-coalescing operator. The null-coalescing operator defines a default value for a nullable type; the expression `(page ?? 1)` means return the value of `page` if it has a value, or return 1 if `page` is null.
+The `PaginatedList.CreateAsync` method takes a page number. The two question marks represent the null-coalescing operator. The null-coalescing operator defines a default value for a nullable type; the expression `(pageNumber ?? 1)` means return the value of `pageNumber` if it has a value, or return 1 if `pageNumber` is null.
 
 ## Add paging links
 
@@ -188,7 +188,7 @@ The paging buttons are displayed by tag helpers:
 ```html
 <a asp-action="Index"
    asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @prevDisabled">
    Previous
@@ -206,10 +206,8 @@ Click the paging links in different sort orders to make sure paging works. Then 
 For the Contoso University website's **About** page, you'll display how many students have enrolled for each enrollment date. This requires grouping and simple calculations on the groups. To accomplish this, you'll do the following:
 
 * Create a view model class for the data that you need to pass to the view.
-
-* Modify the About method in the Home controller.
-
-* Modify the About view.
+* Create the About method in the Home controller.
+* Create the About view.
 
 ### Create the view model
 
@@ -229,17 +227,15 @@ Add a class variable for the database context immediately after the opening curl
 
 [!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_AddContext&highlight=3,5,7)]
 
-Replace the `About` method with the following code:
+Add an `About` method with the following code:
 
 [!code-csharp[](intro/samples/cu/Controllers/HomeController.cs?name=snippet_UseDbSet)]
 
 The LINQ statement groups the student entities by enrollment date, calculates the number of entities in each group, and stores the results in a collection of `EnrollmentDateGroup` view model objects.
-> [!NOTE]
-> In the 1.0 version of Entity Framework Core, the entire result set is returned to the client, and grouping is done on the client. In some scenarios this could create performance problems. Be sure to test performance with production volumes of data, and if necessary use raw SQL to do the grouping on the server. For information about how to use raw SQL, see [the last tutorial in this series](advanced.md).
 
-### Modify the About View
+### Create the About View
 
-Replace the code in the *Views/Home/About.cshtml* file with the following code:
+Add a *Views/Home/About.cshtml* file with the following code:
 
 [!code-html[](intro/samples/cu/Views/Home/About.cshtml)]
 
@@ -247,7 +243,7 @@ Run the app and go to the About page. The count of students for each enrollment 
 
 ## Get the code
 
-[Download or view the completed application.](https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
 
 ## Next steps
 
@@ -261,6 +257,7 @@ In this tutorial, you:
 > * Added paging links
 > * Created an About page
 
-Advance to the next article to learn how to handle data model changes by using migrations.
+Advance to the next tutorial to learn how to handle data model changes by using migrations.
+
 > [!div class="nextstepaction"]
-> [Handle data model changes](migrations.md)
+> [Next: Handle data model changes](migrations.md)

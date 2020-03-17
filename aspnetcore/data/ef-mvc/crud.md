@@ -2,7 +2,7 @@
 title: "Tutorial: Implement CRUD Functionality - ASP.NET MVC with EF Core"
 description: "In this tutorial, you'll review and customize the CRUD (create, read, update, delete) code that the MVC scaffolding automatically creates for you in controllers and views."
 author: rick-anderson
-ms.author: tdykstra
+ms.author: riande
 ms.custom: mvc
 ms.date: 02/04/2019
 ms.topic: tutorial
@@ -27,7 +27,7 @@ In this tutorial, you:
 
 ## Prerequisites
 
-* [Get started with EF Core in an ASP.NET Core MVC web app](intro.md)
+* [Get started with EF Core and ASP.NET Core MVC](intro.md)
 
 ## Customize the Details page
 
@@ -53,7 +53,7 @@ In the following URL, the default route maps Instructor as the controller, Index
 http://localhost:1230/Instructor/Index/1?courseID=2021
 ```
 
-The last part of the URL ("?courseID=2021") is a query string value. The model binder will also pass the ID value to the `Details` method `id` parameter if you pass it as a query string value:
+The last part of the URL ("?courseID=2021") is a query string value. The model binder will also pass the ID value to the `Index` method `id` parameter if you pass it as a query string value:
 
 ```
 http://localhost:1230/Instructor/Index?id=1&CourseID=2021
@@ -118,6 +118,7 @@ Other than the `Bind` attribute, the try-catch block is the only change you've m
 The `ValidateAntiForgeryToken` attribute helps prevent cross-site request forgery (CSRF) attacks. The token is automatically injected into the view by the [FormTagHelper](xref:mvc/views/working-with-forms#the-form-tag-helper) and is included when the form is submitted by the user. The token is validated by the `ValidateAntiForgeryToken` attribute. For more information about CSRF, see [Anti-Request Forgery](../../security/anti-request-forgery.md).
 
 <a id="overpost"></a>
+
 ### Security note about overposting
 
 The `Bind` attribute that the scaffolded code includes on the `Create` method is one way to protect against overposting in create scenarios. For example, suppose the Student entity includes a `Secret` property that you don't want this web page to set.
@@ -171,7 +172,7 @@ Replace the HttpPost Edit action method with the following code.
 
 These changes implement a security best practice to prevent overposting. The scaffolder generated a `Bind` attribute and added the entity created by the model binder to the entity set with a `Modified` flag. That code isn't recommended for many scenarios because the `Bind` attribute clears out any pre-existing data in fields not listed in the `Include` parameter.
 
-The new code reads the existing entity and calls `TryUpdateModel` to update fields in the retrieved entity [based on user input in the posted form data](xref:mvc/models/model-binding#how-model-binding-works). The Entity Framework's automatic change tracking sets the `Modified` flag on the fields that are changed by form input. When the `SaveChanges` method is called, the Entity Framework creates SQL statements to update the database row. Concurrency conflicts are ignored, and only the table columns that were updated by the user are updated in the database. (A later tutorial shows how to handle concurrency conflicts.)
+The new code reads the existing entity and calls `TryUpdateModel` to update fields in the retrieved entity [based on user input in the posted form data](xref:mvc/models/model-binding). The Entity Framework's automatic change tracking sets the `Modified` flag on the fields that are changed by form input. When the `SaveChanges` method is called, the Entity Framework creates SQL statements to update the database row. Concurrency conflicts are ignored, and only the table columns that were updated by the user are updated in the database. (A later tutorial shows how to handle concurrency conflicts.)
 
 As a best practice to prevent overposting, the fields that you want to be updateable by the **Edit** page are whitelisted in the `TryUpdateModel` parameters. (The empty string preceding the list of fields in the parameter list is for a prefix to use with the form fields names.) Currently there are no extra fields that you're protecting, but listing the fields that you want the model binder to bind ensures that if you add fields to the data model in the future, they're automatically protected until you explicitly add them here.
 
@@ -237,7 +238,7 @@ This code accepts an optional parameter that indicates whether the method was ca
 
 Replace the HttpPost `Delete` action method (named `DeleteConfirmed`) with the following code, which performs the actual delete operation and catches any database update errors.
 
-[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_DeleteWithReadFirst&highlight=6,8-11,13-14,18-23)]
+[!code-csharp[](intro/samples/cu/Controllers/StudentsController.cs?name=snippet_DeleteWithReadFirst&highlight=6-9,11-12,16-21)]
 
 This code retrieves the selected entity, then calls the `Remove` method to set the entity's status to `Deleted`. When `SaveChanges` is called, a SQL DELETE command is generated.
 
@@ -287,7 +288,7 @@ For more information, see [Tracking vs. No-Tracking](/ef/core/querying/tracking)
 
 ## Get the code
 
-[Download or view the completed application.](https://github.com/aspnet/Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
+[Download or view the completed application.](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/cu-final)
 
 ## Next steps
 
@@ -300,6 +301,7 @@ In this tutorial, you:
 > * Updated the Delete page
 > * Closed database connections
 
-Advance to the next article to learn how to expand the functionality of the **Index** page by adding sorting, filtering, and paging.
+Advance to the next tutorial to learn how to expand the functionality of the **Index** page by adding sorting, filtering, and paging.
+
 > [!div class="nextstepaction"]
-> [Sorting, filtering, and paging](sort-filter-page.md)
+> [Next: Sorting, filtering, and paging](sort-filter-page.md)
